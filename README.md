@@ -3,6 +3,10 @@
 # ⚠️ STUDENT PROJECT - UI CLONE DEMO ⚠️
 **THIS IS NOT AN OFFICIAL COINBASE PRODUCT. This repository is for educational purposes only as part of a web development course.**
 
+### 🚀 Live Links
+- **Frontend (Netlify):** [https://agudu-coinbase-clone.netlify.app](https://agudu-coinbase-clone.netlify.app)
+- **Backend (Render):** *[Pending Deployment]*
+
 # Interim Assessment: Full-Stack Integration – UI Clone Project
 
 In this assignment, you will integrate your cloned coinbase frontend with a backend API to build a functional cryptocurrency platform with authentication and dynamic data.
