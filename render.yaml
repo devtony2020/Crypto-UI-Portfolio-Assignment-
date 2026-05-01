@@ -14,4 +14,4 @@ services:
       - key: JWT_SECRET
         sync: false # Set this in Render dashboard
       - key: CLIENT_URL
-        value: https://agudu-coinbase-clone.netlify.app
+        value: https://agudu-coinbase-clone1.netlify.app/
