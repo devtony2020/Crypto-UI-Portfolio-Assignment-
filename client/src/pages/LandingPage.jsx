@@ -1,12 +1,10 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCrypto } from "../hooks/useCrypto";
+import CryptoRow from "../components/crypto/CryptoRow";
+
+// Assets
 import heroImage from  "../assets/hero-1-image.avif";
-import btcIcon from "../assets/bitcoin-icon.png";
-import ethIcon from "../assets/eth-icon.png";
-import tetherIcon from "../assets/tether-icon.png";
-import bnbIcon from "../assets/bnb-icon.png";
-import xrpIcon from "../assets/xrp-icon.png";
-import ucdcIcon from "../assets/usdc-icon.png";
 import leftArrowIcon from "../assets/left-arrow.svg";
 import heroImage2 from "../assets/hero-2.avif";
 import heroImage3 from "../assets/hero-3.avif";
@@ -15,12 +13,13 @@ import heroImage5 from "../assets/hero-5.png";
 import heroImage6 from "../assets/hero-6.png";
 import heroImage7 from "../assets/hero-7.png";
 import crytoImage from "../assets/cryto-image.avif";
+
+// Tab Icons (kept for Gainers/New tabs)
 import freyaIcon from "../assets/freysa-icon.png";
 import boboIcon from "../assets/bobo-icon.png";
 import vulcanIcon from "../assets/vulcan-icon.png";
 import shapeshiftIcon from "../assets/shapeshift-icon.png";
 import pirateIcon from "../assets/pirate-icon.png";
-import irysIcon from "../assets/irys-icon.png";
 import hyperIcon from "../assets/hyper-icon.png";
 import jupiterIcon from "../assets/jupiter-icon.png";
 import lighterIcon from "../assets/lighter-icon.png";
@@ -28,10 +27,9 @@ import walrusIcon from "../assets/walrus-icon.png";
 import raydiumIcon from "../assets/raydium-icon.png";
 import sentientIcon from "../assets/sentient-icon.png";
 
-
-
 function Home() {
   const [activeTab, setActiveTab] = useState("tradable");
+  const { cryptos, loading, error } = useCrypto();
   return (
     <main className="bg-white mt-12">
 
@@ -133,146 +131,52 @@ function Home() {
             <div>
               {activeTab === "tradable" && (
                 <ul className="space-y-6 sm:space-y-7 lg:space-y-10">
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={btcIcon} alt="BTC" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Bitcoin</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">BTC</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$96,742</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 2.35%</p>
-                    </div>
-                  </li>
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={ethIcon} alt="ETH" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Ethereum</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">ETH</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$3,420</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 1.82%</p>
-                    </div>
-                  </li>
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={tetherIcon} alt="Tether" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Tether</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">Tether</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$3.00</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 0.01%</p>
-                    </div>
-                  </li>
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={bnbIcon} alt="BNB" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">BNB</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">BNB</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$612</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 3.12%</p>
-                    </div>
-                  </li>
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={xrpIcon} alt="XRP" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">XRP</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">XRP</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$0.62</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 4.50%</p>
-                    </div>
-                  </li>
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={ucdcIcon} alt="XRP" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">USDC</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">USDC</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$1.62</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 4.50%</p>
-                    </div>
-                  </li>
+                  {loading ? (
+                    <li className="text-gray-400 py-4">Loading assets...</li>
+                  ) : error ? (
+                    <li className="text-red-400 py-4">Error: {error}</li>
+                  ) : cryptos.length === 0 ? (
+                    <li className="text-gray-400 py-4">No assets found</li>
+                  ) : (
+                    cryptos.map((crypto) => (
+                      <CryptoRow 
+                        key={crypto._id || crypto.symbol}
+                        name={crypto.name}
+                        symbol={crypto.symbol}
+                        price={crypto.price}
+                        change24h={crypto.change24h}
+                        image={crypto.image}
+                      />
+                    ))
+                  )}
                 </ul>
               )}
               {activeTab === "gainers" && (
                 <ul className="space-y-6 sm:space-y-7 lg:space-y-10">
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={freyaIcon} alt="FREY" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Freysa</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">FREY</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$0.42</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 12.4%</p>
-                    </div>
-                  </li>
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={boboIcon} alt="BOBO" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Bobo Network</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">BOBO</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$0.0012</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 8.71%</p>
-                    </div>
-                  </li>
-                   <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={vulcanIcon} alt="VUL" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Vulcan Forged PYR</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">PYR</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$3.20</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 5.23%</p>
-                    </div>
-                  </li>
-                     <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={pirateIcon} alt="PIRATE" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Pirate Nation Token</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">PIRATE</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$0.15</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 3.50%</p>
-                    </div>
-                  </li>
-                 
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={shapeshiftIcon} alt="SHFT" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">ShapeShift Fox Token</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">FOX</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$0.85</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 4.10%</p>
-                    </div>
-                  </li>
-               
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={hyperIcon} alt="HYPE" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Hyperliquid</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">HYPE</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$5.30</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 4.60%</p>
-                    </div>
-                  </li>
+                  {loading ? (
+                    <li className="text-gray-400 py-4">Loading gainers...</li>
+                  ) : error ? (
+                    <li className="text-red-400 py-4">Error: {error}</li>
+                  ) : cryptos.filter(c => c.change24h > 0).length === 0 ? (
+                    <li className="text-gray-400 py-4">No top gainers right now</li>
+                  ) : (
+                    cryptos
+                      .filter(c => c.change24h > 0)
+                      .sort((a, b) => b.change24h - a.change24h)
+                      .map((crypto) => (
+                        <CryptoRow 
+                          key={crypto._id || crypto.symbol}
+                          name={crypto.name}
+                          symbol={crypto.symbol}
+                          price={crypto.price}
+                          change24h={crypto.change24h}
+                          image={crypto.image}
+                        />
+                      ))
+                  )}
                 </ul>
               )}
+
               {activeTab === "new" && (
                 <ul className="space-y-6 sm:space-y-7 lg:space-y-10">
                   <li className="flex items-center gap-3 sm:gap-4">

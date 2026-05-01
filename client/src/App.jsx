@@ -9,11 +9,14 @@ import SplashPage from "./pages/SplashPage.jsx";
 import CreateAccountPage from "./pages/CreateAccountPage.jsx";
 
 
+import { AuthProvider } from "./context/AuthContext.jsx";
 
 function App() {
   return (
-    <Router>
-      <DisclaimerBanner />
+    <AuthProvider>
+      <Router>
+        <DisclaimerBanner />
+
       <Routes>
         <Route
           path="/"
@@ -31,7 +34,8 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/create-account" element={<CreateAccountPage />} />
       </Routes>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 }
 

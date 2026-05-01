@@ -1,9 +1,10 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/fcRde9Vj)
+
 # Coinbase Clone - React & Tailwind CSS Assignment
 
 ## 🌐 Deployment
 
-Live site: [https://agudu-coinbase-clone.netlify.app/](https://agudu-coinbase-clone.netlify.app/)
+Live site: [https://agudu-coinbase-clone1.netlify.app/](https://agudu-coinbase-clone.netlify.app/)
 
 ## 📋 Overview
 
@@ -78,7 +79,7 @@ src/
 
 ## 🎨 Design Reference
 
-Visit [coinbase.com](https://www.coinbase.com/) 
+Visit [coinbase.com](https://www.coinbase.com/)
 
 - Overall layout and structure across all pages
 - Consistent color scheme and typography

@@ -1,14 +1,22 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import passkey from "../assets/passkey.svg";
 import googleIcon from "../assets/google-icon.svg";
 import coinbaseImage from "../assets/coinbase-v2.svg";
 
 function SignInPage() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, loading, error } = useAuth();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const result = await login(email, password);
+    if (result.success) {
+      navigate("/"); // Redirect to home on success
+    }
   };
 
   return (
@@ -35,6 +43,13 @@ function SignInPage() {
           <p className="text-yellow-400 font-medium mb-10 text-left">
             Demo app – do not use your real password
           </p>
+
+          {error && (
+            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-6">
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}
             <div>
@@ -52,19 +67,31 @@ function SignInPage() {
               />
             </div>
           
+            {/* Password */}
             <div>
-             
-              <div className="relative">
-                
-              </div>
+              <label htmlFor="password" id="password-label" className="block text-sm font-medium text-gray-50 mb-2">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Your password"
+                className="w-full border bg-black border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent"
+                required
+              />
             </div>
 
             {/* Submit button */}
             <button
               type="submit"
-              className="w-full py-3 rounded-full font-semibold text-base bg-blue-600 text-white hover:bg-blue-700 transition"
+              disabled={loading}
+              className={`w-full py-3 rounded-full font-semibold text-base transition ${
+                loading ? 'bg-blue-600/50 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'
+              }`}
             >
-              Continue
+              {loading ? 'Signing in...' : 'Continue'}
             </button>
           </form>
 
@@ -137,3 +164,4 @@ function SignInPage() {
 }
 
 export default SignInPage;
+

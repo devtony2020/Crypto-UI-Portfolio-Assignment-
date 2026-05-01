@@ -1,16 +1,24 @@
 import { useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams, useNavigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 import coinbaseImage from "../assets/coinbase-v2.svg";
 import googleIcon from "../assets/google-icon.svg";
 
 function CreateAccountPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [searchParams] = useSearchParams();
+  const { register, loading, error } = useAuth();
+  const navigate = useNavigate();
   const accountType = searchParams.get("type") || "personal";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle email signup logic here
+    const result = await register(name, email, password);
+    if (result.success) {
+      navigate("/"); // Redirect to home on success
+    }
   };
 
   return (
@@ -39,7 +47,29 @@ function CreateAccountPage() {
             Access all that Coinbase has to offer with a single <br />account.
           </p>
 
+          {error && (
+            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-6 text-sm">
+              {error}
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Name */}
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-gray-50 mb-2">
+                Full Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Your full name"
+                className="w-full border bg-black border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+            </div>
+
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-50 mb-2">
@@ -51,6 +81,22 @@ function CreateAccountPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email address"
+                className="w-full border bg-black border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent"
+                required
+              />
+            </div>
+
+            {/* Password */}
+            <div>
+              <label htmlFor="password" id="password-label" className="block text-sm font-medium text-gray-50 mb-2">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Minimum 6 characters"
                 className="w-full border bg-black border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent mb-5"
                 required
               />
@@ -59,9 +105,12 @@ function CreateAccountPage() {
             {/* Email Submit Button */}
             <button
               type="submit"
-              className="w-full py-3 px-4 bg-blue-500 text-black font-semibold rounded-3xl hover:bg-blue-400 transition"
+              disabled={loading}
+              className={`w-full py-3 px-4 font-semibold rounded-3xl transition ${
+                loading ? 'bg-blue-500/50 cursor-not-allowed' : 'bg-blue-500 text-black hover:bg-blue-400'
+              }`}
             >
-              Continue 
+              {loading ? 'Creating account...' : 'Continue'}
             </button>
           </form>
         <div className="flex items-center justify-center gap-2 my-6">
@@ -127,3 +176,4 @@ function CreateAccountPage() {
 }
 
 export default CreateAccountPage;
+
