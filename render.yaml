@@ -13,7 +13,7 @@ PORT=5000
 MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/coinbase-clone
 JWT_SECRET=7a8068556dde2696942987bdfab59685b2d65a92a8bd01ddaea4b806bf8ea7a03e5339b27741055c3f716977c1b659d399447dccee31576f56372a11f86d5b96
 NODE_ENV=production
-CLIENT_URL=https://your-frontend-url.vercel.app
+CLIENT_URL=https://agudu-coinbase-clone.netlify.app
 
 ## To Deploy:
 
