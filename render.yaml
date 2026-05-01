@@ -1,0 +1,32 @@
+# Deployment Configuration for Render
+
+## Backend Server Configuration
+
+name: coinbase-clone-api
+runtime: node
+buildCommand: npm --prefix server install
+startCommand: npm --prefix server start
+
+## Environment Variables (Set these in Render dashboard)
+
+PORT=5000
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/coinbase-clone
+JWT_SECRET=your_super_secret_jwt_key_change_in_production
+NODE_ENV=production
+CLIENT_URL=https://your-frontend-url.vercel.app
+
+## To Deploy:
+
+1. Push code to GitHub
+2. Go to Render.com > New > Web Service
+3. Select GitHub repository
+4. Configure as shown above
+5. Set environment variables in dashboard
+6. Deploy
+
+## Post-deployment:
+
+```bash
+curl https://your-api.onrender.com/api/health
+curl -X POST https://your-api.onrender.com/api/seed
+```
