@@ -5,6 +5,7 @@
 ## 🌐 Deployment
 
 Live site: [https://agudu-crypto-ui-clone.netlify.app/](https://agudu-crypto-ui-clone.netlify.app/)
+Backend API: [https://agudu50-coinbase-clone.onrender.com/api](https://agudu50-coinbase-clone.onrender.com/api)
 
 ## 📋 Overview
 

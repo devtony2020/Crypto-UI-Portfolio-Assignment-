@@ -1,11 +1,13 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/bMYWKvYv)
 
 # ⚠️ STUDENT PROJECT - UI CLONE DEMO ⚠️
+
 **THIS IS NOT AN OFFICIAL COINBASE PRODUCT. This repository is for educational purposes only as part of a web development course.**
 
 ### 🚀 Live Links
-- **Frontend (Netlify):** [https://agudu-coinbase-clone.netlify.app](https://agudu-coinbase-clone.netlify.app)
-- **Backend (Render):** *[Pending Deployment]*
+
+- **Frontend (Netlify):** [https://agudu-crypto-ui-clone.netlify.app](https://agudu-crypto-ui-clone.netlify.app)
+- **Backend (Render):** [https://agudu50-coinbase-clone.onrender.com/api](https://agudu50-coinbase-clone.onrender.com/api)
 
 # Interim Assessment: Full-Stack Integration – UI Clone Project
 
