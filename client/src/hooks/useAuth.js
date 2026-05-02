@@ -2,6 +2,25 @@ import { useState } from 'react';
 import API_URL from '../config/api';
 import { useAuthContext } from '../context/AuthContext';
 
+const apiErrorMap = (error) => {
+  const msg = error.message || error.toString();
+  
+  if (msg.includes('Failed to fetch')) {
+    return 'Cannot connect to server. Please check your internet or try again later.';
+  }
+  if (msg.includes('secretOrPrivateKey must have a value')) {
+    return 'Server configuration error (JWT Secret missing). Please contact support.';
+  }
+  if (msg.includes('Invalid credentials') || msg.includes('401')) {
+    return 'Incorrect email or password. Please try again.';
+  }
+  if (msg.includes('already exists') || msg.includes('400')) {
+    return 'An account with this email already exists.';
+  }
+  
+  return msg;
+};
+
 export const useAuth = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -25,8 +44,9 @@ export const useAuth = () => {
         throw new Error(data.message || 'Login failed');
       }
     } catch (err) {
-      setError(err.message);
-      return { success: false, error: err.message };
+      const friendlyError = apiErrorMap(err);
+      setError(friendlyError);
+      return { success: false, error: friendlyError };
     } finally {
       setLoading(false);
     }
@@ -50,8 +70,9 @@ export const useAuth = () => {
         throw new Error(data.message || 'Registration failed');
       }
     } catch (err) {
-      setError(err.message);
-      return { success: false, error: err.message };
+      const friendlyError = apiErrorMap(err);
+      setError(friendlyError);
+      return { success: false, error: friendlyError };
     } finally {
       setLoading(false);
     }
@@ -61,5 +82,5 @@ export const useAuth = () => {
     contextLogout();
   };
 
-  return { login, register, logout, loading, error };
+  return { login, register, logout, loading, error, setError };
 };

@@ -4,11 +4,12 @@ import { useAuth } from "../hooks/useAuth";
 import passkey from "../assets/passkey.svg";
 import googleIcon from "../assets/google-icon.svg";
 import coinbaseImage from "../assets/coinbase-v2.svg";
+import Notification from "../components/common/Notification";
 
 function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, loading, error } = useAuth();
+  const { login, loading, error, setError } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -44,11 +45,11 @@ function SignInPage() {
             Demo app – do not use your real password
           </p>
 
-          {error && (
-            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-6">
-              {error}
-            </div>
-          )}
+          <Notification 
+            message={error} 
+            type="error" 
+            onClose={() => setError(null)} 
+          />
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email */}

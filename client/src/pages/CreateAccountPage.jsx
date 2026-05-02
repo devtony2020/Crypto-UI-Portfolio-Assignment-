@@ -3,13 +3,14 @@ import { Link, useSearchParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import coinbaseImage from "../assets/coinbase-v2.svg";
 import googleIcon from "../assets/google-icon.svg";
+import Notification from "../components/common/Notification";
 
 function CreateAccountPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [searchParams] = useSearchParams();
-  const { register, loading, error } = useAuth();
+  const { register, loading, error, setError } = useAuth();
   const navigate = useNavigate();
   const accountType = searchParams.get("type") || "personal";
 
@@ -47,11 +48,11 @@ function CreateAccountPage() {
             Access all that Coinbase has to offer with a single <br />account.
           </p>
 
-          {error && (
-            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-6 text-sm">
-              {error}
-            </div>
-          )}
+          <Notification 
+            message={error} 
+            type="error" 
+            onClose={() => setError(null)} 
+          />
 
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
