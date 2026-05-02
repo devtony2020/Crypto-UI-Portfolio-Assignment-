@@ -343,71 +343,6 @@ function Navbar() {
                   {item}
                 </a>
 
-                {/* Dropdown + Blur overlay */}
-                {activeDropdown === item && dropdownData[item] && (
-                  <>
-                    {/* Blur overlay on bottom portion */}
-                    <div className="fixed inset-0 top-[65vh] bg-black/30 backdrop-blur-sm z-40" />
-                    {/* Full-width dropdown */}
-                    <div className="fixed left-0 right-0 top-[72px] z-50 bg-white shadow-2xl border-t border-gray-100" style={{ height: 'calc(65vh - 72px)' }}>
-                      <div className="max-w-screen-2xl mx-auto px-12 py-10 grid grid-cols-3 gap-x-12 gap-y-1 h-full overflow-y-auto">
-                        {/* Column 1 */}
-                        <div className="space-y-1">
-                          {dropdownData[item].column1.map((entry) =>
-                            entry.isHeader ? (
-                              <p key={entry.title} className="font-bold text-gray-400 text-xs uppercase tracking-wider px-3 pt-4 pb-1">{entry.title}</p>
-                            ) : (
-                              <a
-                                key={entry.title}
-                                href="#"
-                                className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 transition group"
-                              >
-                                <div className="mt-0.5 flex-shrink-0">{entry.icon}</div>
-                                <div>
-                                  <p className="font-semibold text-gray-900 text-base group-hover:text-gray-600 transition">{entry.title}</p>
-                                  <p className="text-sm text-gray-500 mt-0.5">{entry.desc}</p>
-                                </div>
-                              </a>
-                            )
-                          )}
-                        </div>
-                        {/* Column 2 */}
-                        <div className="space-y-1">
-                          {dropdownData[item].column2.map((entry) =>
-                            entry.isHeader ? (
-                              <p key={entry.title} className="font-bold text-gray-400 text-xs uppercase tracking-wider px-3 pt-4 pb-1">{entry.title}</p>
-                            ) : (
-                              <a
-                                key={entry.title}
-                                href="#"
-                                className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 transition group"
-                              >
-                                <div className="mt-0.5 flex-shrink-0">{entry.icon}</div>
-                                <div>
-                                  <p className="font-semibold text-gray-900 text-base group-hover:text-gray-600 transition">{entry.title}</p>
-                                  <p className="text-sm text-gray-500 mt-0.5">{entry.desc}</p>
-                                </div>
-                              </a>
-                            )
-                          )}
-                        </div>
-                        {/* Column 3 */}
-                        {dropdownData[item].column3 && (
-                          <div className="rounded-2xl p-6 flex flex-col gap-4">
-                            <div className="flex items-start gap-4">
-                              <img src={dropdownData[item].column3.image} alt={dropdownData[item].column3.imageAlt} className="w-20 h-20 rounded-lg flex-shrink-0" />
-                              <div>
-                                <a href="#" className="font-semibold text-gray-900 text-xl hover:underline">{dropdownData[item].column3.title}</a>
-                                <p className="text-base text-gray-500 mt-1">{dropdownData[item].column3.desc}</p>
-                                <a href="#" className="text-blue-600 font-semibold text-base hover:underline mt-3 inline-block">{dropdownData[item].column3.linkText}</a>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                )}
               </div>
             ))}
           </nav>
@@ -464,6 +399,67 @@ function Navbar() {
           </button>
         </div>
       </div>
+      
+      {/* Full-width Dropdown (outside the loop to prevent covering header) */}
+      {activeDropdown && dropdownData[activeDropdown] && (
+        <div 
+          className="absolute left-0 right-0 top-full z-30 bg-white shadow-2xl border-t border-gray-100" 
+          style={{ height: 'calc(65vh - 76px)' }}
+          onMouseEnter={() => setActiveDropdown(activeDropdown)}
+          onMouseLeave={() => setActiveDropdown(null)}
+        >
+          {/* Blur overlay */}
+          <div className="fixed inset-0 top-[65vh] bg-black/30 backdrop-blur-sm -z-10 pointer-events-none" />
+          
+          <div className="max-w-screen-2xl mx-auto px-12 py-10 grid grid-cols-3 gap-x-12 gap-y-1 h-full overflow-y-auto">
+            {/* Column 1 */}
+            <div className="space-y-1">
+              {dropdownData[activeDropdown].column1.map((entry) =>
+                entry.isHeader ? (
+                  <p key={entry.title} className="font-bold text-gray-400 text-xs uppercase tracking-wider px-3 pt-4 pb-1">{entry.title}</p>
+                ) : (
+                  <a key={entry.title} href="#" className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 transition group">
+                    <div className="mt-0.5 flex-shrink-0">{entry.icon}</div>
+                    <div>
+                      <p className="font-semibold text-gray-900 text-base group-hover:text-gray-600 transition">{entry.title}</p>
+                      <p className="text-sm text-gray-500 mt-0.5">{entry.desc}</p>
+                    </div>
+                  </a>
+                )
+              )}
+            </div>
+            {/* Column 2 */}
+            <div className="space-y-1">
+              {dropdownData[activeDropdown].column2.map((entry) =>
+                entry.isHeader ? (
+                  <p key={entry.title} className="font-bold text-gray-400 text-xs uppercase tracking-wider px-3 pt-4 pb-1">{entry.title}</p>
+                ) : (
+                  <a key={entry.title} href="#" className="flex items-start gap-3 p-3 rounded-xl hover:bg-gray-50 transition group">
+                    <div className="mt-0.5 flex-shrink-0">{entry.icon}</div>
+                    <div>
+                      <p className="font-semibold text-gray-900 text-base group-hover:text-gray-600 transition">{entry.title}</p>
+                      <p className="text-sm text-gray-500 mt-0.5">{entry.desc}</p>
+                    </div>
+                  </a>
+                )
+              )}
+            </div>
+            {/* Column 3 */}
+            {dropdownData[activeDropdown].column3 && (
+              <div className="rounded-2xl p-6 flex flex-col gap-4">
+                <div className="flex items-start gap-4">
+                  <img src={dropdownData[activeDropdown].column3.image} alt={dropdownData[activeDropdown].column3.imageAlt} className="w-20 h-20 rounded-lg flex-shrink-0" />
+                  <div>
+                    <a href="#" className="font-semibold text-gray-900 text-xl hover:underline">{dropdownData[activeDropdown].column3.title}</a>
+                    <p className="text-base text-gray-500 mt-1">{dropdownData[activeDropdown].column3.desc}</p>
+                    <a href="#" className="text-blue-600 font-semibold text-base hover:underline mt-3 inline-block">{dropdownData[activeDropdown].column3.linkText}</a>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* FULLSCREEN MOBILE MENU — ONLY for mobile/tablet */}
       {menuOpen && (
