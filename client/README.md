@@ -4,7 +4,7 @@
 
 ## 🌐 Deployment
 
-Live site: [https://agudu-coinbase-clone1.netlify.app/](https://agudu-coinbase-clone.netlify.app/)
+Live site: [https://agudu-crypto-ui-clone.netlify.app/](https://agudu-crypto-ui-clone.netlify.app/)
 
 ## 📋 Overview
 
