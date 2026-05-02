@@ -8,6 +8,8 @@ const app = express();
 // Connect to MongoDB
 connectDB();
 
+console.log('JWT_SECRET loaded:', !!process.env.JWT_SECRET);
+
 // Middleware
 const allowedOrigins = [
   process.env.CLIENT_URL,

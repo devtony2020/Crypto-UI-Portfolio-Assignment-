@@ -13,7 +13,8 @@ export const useCrypto = () => {
       const data = await response.json();
       
       if (response.ok) {
-        setCryptos(data);
+        // The backend returns { success: true, data: [...] }
+        setCryptos(data.data || []);
       } else {
         throw new Error(data.message || 'Failed to fetch cryptocurrencies');
       }
