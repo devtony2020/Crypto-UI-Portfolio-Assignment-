@@ -36,15 +36,66 @@ app.use(express.json());
 // Root Landing Page
 app.get('/', (req, res) => {
   res.status(200).send(`
-    <div style="font-family: sans-serif; padding: 50px; line-height: 1.6; max-width: 600px; margin: 0 auto; color: #1a1b1d;">
-      <h1 style="color: #0052ff;">Coinbase Clone Backend</h1>
-      <p>The API is up and running successfully!</p>
-      <div style="background: #f4f7f9; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
-        <p><strong>Primary API Endpoint:</strong> <a href="/api" style="color: #0052ff; font-weight: bold; text-decoration: none;">/api</a></p>
-        <p><strong>Status:</strong> <span style="color: #05b169;">● Operational</span></p>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Coinbase Clone API</title>
+      <style>
+        body { margin: 0; padding: 0; background-color: #f8fafc; }
+        .container { 
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          padding: 80px 20px;
+          line-height: 1.6;
+          max-width: 500px;
+          margin: 0 auto;
+          color: #1a1b1d;
+          text-align: center;
+        }
+        .card {
+          background: white;
+          padding: 40px;
+          border-radius: 24px;
+          box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+          border: 1px solid #e2e8f0;
+        }
+        h1 { color: #0052ff; font-size: 28px; margin-bottom: 8px; }
+        p { color: #64748b; font-size: 16px; margin-bottom: 24px; }
+        .status-box {
+          background: #f4f7f9;
+          padding: 20px;
+          border-radius: 16px;
+          text-align: left;
+          border: 1px solid #e2e8f0;
+        }
+        .status-box p { margin: 8px 0; font-size: 14px; color: #1a1b1d; }
+        a { color: #0052ff; font-weight: bold; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .dot { color: #05b169; margin-right: 4px; }
+        .footer { margin-top: 32px; font-size: 13px; color: #94a3b8; }
+        
+        @media (max-width: 640px) {
+          .container { padding: 40px 16px; }
+          .card { padding: 30px 20px; }
+          h1 { font-size: 24px; }
+        }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="card">
+          <h1>Coinbase Clone</h1>
+          <p>API is Operational</p>
+          <div class="status-box">
+            <p><strong>Primary API:</strong> <a href="/api">/api</a></p>
+            <p><strong>Status:</strong> <span class="dot">●</span> Online</p>
+          </div>
+        </div>
+        <p class="footer">Developed by Anthony Gudu</p>
       </div>
-      <p style="margin-top: 30px; font-size: 14px; color: #64748b;">Developed by Anthony Gudu.</p>
-    </div>
+    </body>
+    </html>
   `);
 });
 
