@@ -38,6 +38,22 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/crypto', require('./routes/cryptoRoutes'));
 app.use('/api/seed', require('./routes/seedRoutes'));
 
+// Welcome / Status Route
+app.get('/api', (req, res) => {
+  res.status(200).json({
+    status: 'online',
+    message: 'Welcome to the Coinbase Clone API',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    endpoints: {
+      auth: '/api/auth',
+      crypto: '/api/crypto',
+      health: '/api/health'
+    },
+    documentation: 'https://github.com/devtony2020/Crypto-UI-Portfolio-Assignment-'
+  });
+});
+
 // Basic health check endpoint
 app.get('/api/health', (req, res) => {
   res.status(200).json({ message: 'Server is running' });
