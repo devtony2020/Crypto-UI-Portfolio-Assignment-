@@ -378,7 +378,7 @@ function Navbar() {
               placeholder="Search"
               onFocus={() => setIsSearchOpen(true)}
               onBlur={() => setTimeout(() => setIsSearchOpen(false), 200)}
-              className={`absolute right-0 bg-gray-100 border-none rounded-full py-2.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-blue-500 transition-all duration-500 ease-in-out ${isSearchOpen ? 'w-[450px] opacity-100' : 'w-0 opacity-0 pointer-events-none'}`}
+              className={`absolute right-0 bg-gray-100 border border-transparent rounded-full py-2.5 pl-12 pr-4 text-sm outline-none focus:ring-2 focus:ring-blue-600 focus:border-blue-600 focus:bg-white transition-all duration-500 ease-in-out ${isSearchOpen ? 'w-[450px] opacity-100' : 'w-0 opacity-0 pointer-events-none'}`}
             />
           </div>
 
