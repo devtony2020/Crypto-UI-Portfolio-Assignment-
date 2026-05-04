@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
         <p><strong>Primary API Endpoint:</strong> <a href="/api" style="color: #0052ff; font-weight: bold; text-decoration: none;">/api</a></p>
         <p><strong>Status:</strong> <span style="color: #05b169;">● Operational</span></p>
       </div>
-      <p style="margin-top: 30px; font-size: 14px; color: #64748b;">Developed for DCIT323 Crypto-UI Assignment.</p>
+      <p style="margin-top: 30px; font-size: 14px; color: #64748b;">Developed by Anthony Gudu.</p>
     </div>
   `);
 });
