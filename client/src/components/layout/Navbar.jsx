@@ -8,6 +8,16 @@ import languageIcon from "../../assets/world-icon.svg";
 import menuIcon from "../../assets/menu-icon.svg";
 import closeIcon from "../../assets/close-icon.svg";
 import arrowIcon from "../../assets/arrow-icon.svg";
+import bitcoinIcon from "../../assets/bitcoin-icon.png";
+import ethIcon from "../../assets/eth-icon.png";
+import tetherIcon from "../../assets/tether-icon.png";
+import xrpIcon from "../../assets/xrp-icon.png";
+import bnbIcon from "../../assets/bnb-icon.png";
+import usdcIcon from "../../assets/usdc-icon.png";
+import solanaIcon from "../../assets/bobo-icon.png"; // Fallback for Solana
+import tronIcon from "../../assets/raydium-icon.png"; // Fallback for TRON
+import figrIcon from "../../assets/irys-icon.png"; // Fallback for FIGR
+import dogeIcon from "../../assets/sentient-icon.png"; // Fallback for DOGE
 import navIcon from "../../assets/navigation-upsell-icon.png";
 import letterIcon from "../../assets/letter-c-icon.svg";
 import squareIcon from "../../assets/square-icon.svg";
@@ -37,6 +47,7 @@ function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchTab, setSearchTab] = useState("Top");
   const [isLangOpen, setIsLangOpen] = useState(false);
   const { user } = useAuthContext();
   const { logout } = useAuth();
@@ -554,46 +565,101 @@ function Navbar() {
           <div className="p-8 border-b border-gray-50 flex items-center justify-between">
             <div className="flex gap-2 overflow-x-auto no-scrollbar">
               {["Top", "Crypto", "Stocks", "Predictions", "Perpetuals", "Future"].map((cat) => (
-                <button key={cat} className={`px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${cat === "Top" ? "bg-black text-white" : "text-gray-500 hover:bg-gray-100"}`}>
+                <button 
+                  key={cat} 
+                  onClick={() => setSearchTab(cat)}
+                  className={`px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${searchTab === cat ? "bg-black text-white" : "text-gray-500 hover:bg-gray-100"}`}
+                >
                   {cat}
                 </button>
               ))}
             </div>
-            <button className="text-sm font-bold text-blue-600 hover:underline">View all assets</button>
+            <button 
+              onClick={() => { setIsSearchOpen(false); /* Navigate logic could go here */ }}
+              className="text-sm font-bold text-blue-600 hover:underline"
+            >
+              View all assets
+            </button>
           </div>
 
           <div className="p-8">
-            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-6">Trending Assets</span>
+            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-6">
+              {searchTab === "Top" ? "Trending Assets" : `${searchTab} Assets`}
+            </span>
             
             <div className="grid grid-cols-2 gap-x-12 gap-y-1">
-              {[
-                { name: "Bitcoin", symbol: "BTC", price: "$79,178.00", change: "+0.69%" },
-                { name: "Ethereum", symbol: "ETH", price: "$2,344.09", change: "+0.92%" },
-                { name: "Tether", symbol: "USDT", price: "$0.9998", change: "+0.00%" },
-                { name: "XRP", symbol: "XRP", price: "$1.40", change: "+0.20%" },
-                { name: "BNB", symbol: "BNB", price: "$624.10", change: "+0.81%" },
-                { name: "USDC", symbol: "USDC", price: "$0.9998", change: "-0.01%" },
-                { name: "Solana", symbol: "SOL", price: "$84.33", change: "+0.15%" },
-                { name: "TRON", symbol: "TRX", price: "$0.3390", change: "+0.29%" },
-                { name: "Figure Heloc", symbol: "FIGR_HELOC", price: "$1.04", change: "+0.00%" },
-                { name: "Dogecoin", symbol: "DOGE", price: "$0.1114", change: "+2.61%" }
-              ].map((asset) => (
-                <button key={asset.symbol} className="flex items-center justify-between py-3 hover:bg-gray-50 rounded-xl px-4 -mx-4 transition-colors group">
-                  <div className="flex items-center gap-4">
-                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-xs text-gray-500 group-hover:bg-white transition-colors">
-                      {asset.symbol.substring(0, 2)}
+              {(() => {
+                let assets = [];
+                if (searchTab === "Top" || searchTab === "Crypto") {
+                  assets = [
+                    { name: "Bitcoin", symbol: "BTC", price: "$79,178.00", change: "+0.69%", icon: bitcoinIcon },
+                    { name: "Ethereum", symbol: "ETH", price: "$2,344.09", change: "+0.92%", icon: ethIcon },
+                    { name: "Tether", symbol: "USDT", price: "$0.9998", change: "+0.00%", icon: tetherIcon },
+                    { name: "XRP", symbol: "XRP", price: "$1.40", change: "+0.20%", icon: xrpIcon },
+                    { name: "BNB", symbol: "BNB", price: "$624.10", change: "+0.81%", icon: bnbIcon },
+                    { name: "USDC", symbol: "USDC", price: "$0.9998", change: "-0.01%", icon: usdcIcon },
+                    { name: "Solana", symbol: "SOL", price: "$84.33", change: "+0.15%", icon: solanaIcon },
+                    { name: "TRON", symbol: "TRX", price: "$0.3390", change: "+0.29%", icon: tronIcon },
+                    { name: "Figure Heloc", symbol: "FIGR_HELOC", price: "$1.04", change: "+0.00%", icon: figrIcon },
+                    { name: "Dogecoin", symbol: "DOGE", price: "$0.1114", change: "+2.61%", icon: dogeIcon }
+                  ];
+                } else if (searchTab === "Stocks") {
+                  assets = [
+                    { name: "NVIDIA Corp", symbol: "NVDA", price: "$145.20", change: "+2.45%", icon: null },
+                    { name: "Tesla Inc", symbol: "TSLA", price: "$238.40", change: "-1.10%", icon: null },
+                    { name: "Apple Inc", symbol: "AAPL", price: "$226.15", change: "+0.35%", icon: null },
+                    { name: "Microsoft", symbol: "MSFT", price: "$415.80", change: "+0.78%", icon: null }
+                  ];
+                } else if (searchTab === "Predictions") {
+                  assets = [
+                    { name: "BTC > $100k EOY", symbol: "PRED", price: "Yes: 64%", change: "+2%", icon: null },
+                    { name: "Fed Rate Cut Sept", symbol: "ECON", price: "Yes: 82%", change: "+5%", icon: null },
+                    { name: "Solana ETF Approval", symbol: "SOL_ETF", price: "Yes: 15%", change: "-3%", icon: null }
+                  ];
+                } else if (searchTab === "Perpetuals") {
+                  assets = [
+                    { name: "BTC Perpetual", symbol: "BTC-PERP", price: "$79,210", change: "100x", icon: null },
+                    { name: "ETH Perpetual", symbol: "ETH-PERP", price: "$2,348", change: "50x", icon: null },
+                    { name: "SOL Perpetual", symbol: "SOL-PERP", price: "$84.50", change: "20x", icon: null }
+                  ];
+                } else if (searchTab === "Future") {
+                  assets = [
+                    { name: "Gold Futures", symbol: "GC1!", price: "$2,450.00", change: "+1.20%", icon: null },
+                    { name: "Crude Oil WTI", symbol: "CL1!", price: "$78.45", change: "-0.45%", icon: null },
+                    { name: "S&P 500 Futures", symbol: "ES1!", price: "$5,420", change: "+0.15%", icon: null }
+                  ];
+                }
+
+                if (assets.length === 0) {
+                  return (
+                    <div className="col-span-2 py-10 text-center text-gray-400">
+                      No {searchTab.toLowerCase()} assets found matching your criteria.
                     </div>
-                    <div className="text-left">
-                      <p className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{asset.name}</p>
-                      <p className="text-xs text-gray-400">{asset.symbol}</p>
+                  );
+                }
+
+                return assets.map((asset) => (
+                  <button key={asset.symbol} className="flex items-center justify-between py-3 hover:bg-gray-50 rounded-xl px-4 -mx-4 transition-colors group">
+                    <div className="flex items-center gap-4">
+                      {asset.icon ? (
+                        <img src={asset.icon} alt={asset.name} className="w-10 h-10 rounded-full object-contain bg-gray-50 p-1" />
+                      ) : (
+                        <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center font-bold text-[10px]">
+                          {asset.symbol.substring(0, 3)}
+                        </div>
+                      )}
+                      <div className="text-left">
+                        <p className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{asset.name}</p>
+                        <p className="text-xs text-gray-400">{asset.symbol}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-gray-900">{asset.price}</p>
-                    <p className={`text-xs font-medium ${asset.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>{asset.change}</p>
-                  </div>
-                </button>
-              ))}
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900">{asset.price}</p>
+                      <p className={`text-xs font-medium ${asset.change.startsWith('+') || asset.change.includes('x') ? 'text-green-500' : 'text-red-500'}`}>{asset.change}</p>
+                    </div>
+                  </button>
+                ));
+              })()}
             </div>
           </div>
 
