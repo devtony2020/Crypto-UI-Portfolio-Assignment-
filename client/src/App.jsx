@@ -7,6 +7,8 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import SignInPage from "./pages/SignInPage.jsx";
 import SplashPage from "./pages/SplashPage.jsx";
 import CreateAccountPage from "./pages/CreateAccountPage.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import ProtectedRoute from "./components/auth/ProtectedRoute.jsx";
 
 
 import { AuthProvider } from "./context/AuthContext.jsx";
@@ -33,6 +35,14 @@ function App() {
         <Route path="/signup-splash" element={<SplashPage redirectTo="/signup" />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/create-account" element={<CreateAccountPage />} />
+        <Route 
+          path="/profile" 
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
       </Router>
     </AuthProvider>

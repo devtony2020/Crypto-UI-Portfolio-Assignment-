@@ -29,7 +29,7 @@ import sentientIcon from "../assets/sentient-icon.png";
 
 function Home() {
   const [activeTab, setActiveTab] = useState("tradable");
-  const { cryptos, loading, error } = useCrypto();
+  const { cryptos, loading, error } = useCrypto(activeTab === "tradable" ? "" : activeTab);
   return (
     <main className="bg-white mt-12">
 
@@ -179,70 +179,29 @@ function Home() {
 
               {activeTab === "new" && (
                 <ul className="space-y-6 sm:space-y-7 lg:space-y-10">
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={jupiterIcon} alt="JUPITER" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Jupiter</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">JUPITER</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$10.30</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 1.80%</p>
-                    </div>
-                  </li>
-
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={lighterIcon} alt="LIGHTER" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Lighter</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">LIGHTER</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$8.30</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 0.80%</p>
-                    </div>
-                  </li>
-
-                   <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={walrusIcon} alt="WAL" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Walrus</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">WAL</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$9.30</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 6.80%</p>
-                    </div>
-                  </li>
-
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={raydiumIcon} alt="RAY" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Raydium</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">RAY</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$6.30</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 1.50%</p>
-                    </div>
-                  </li>
-
-                  <li className="flex items-center gap-3 sm:gap-4">
-                    <img src={sentientIcon} alt="IRYS" className="w-12 h-12 sm:w-14 sm:h-14 lg:w-12 lg:h-12 rounded-full" />
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-lg sm:text-xl lg:text-lg hidden lg:block">Sentient</p>
-                      <p className="text-lg sm:text-xl text-white font-medium lg:hidden">SENT</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-lg sm:text-xl lg:text-lg font-medium">$9.20</p>
-                      <p className="text-base sm:text-lg lg:text-sm text-green-400 flex items-center justify-end gap-0.5"><span className="inline-block rotate-45">↑</span> 2.90%</p>
-                    </div>
-                  </li>
+                  {loading ? (
+                    <li className="text-gray-400 py-4">Loading new assets...</li>
+                  ) : error ? (
+                    <li className="text-red-400 py-4">Error: {error}</li>
+                  ) : cryptos.length === 0 ? (
+                    <li className="text-gray-400 py-4">No new assets found</li>
+                  ) : (
+                    cryptos.map((crypto) => (
+                      <CryptoRow
+                        key={crypto._id}
+                        name={crypto.name}
+                        symbol={crypto.symbol}
+                        price={crypto.price}
+                        change24h={crypto.change24h}
+                        image={crypto.image}
+                      />
+                    ))
+                  )}
                 </ul>
               )}
             </div>
+            </div>
           </div>
-        </div>
         </div>
       </section>
 

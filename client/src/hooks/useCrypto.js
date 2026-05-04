@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import API_URL from '../config/api';
 
-export const useCrypto = () => {
+export const useCrypto = (endpoint = '') => {
   const [cryptos, setCryptos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -9,11 +9,10 @@ export const useCrypto = () => {
   const fetchCryptos = async () => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}/crypto`);
+      const response = await fetch(`${API_URL}/crypto${endpoint ? `/${endpoint}` : ''}`);
       const data = await response.json();
       
       if (response.ok) {
-        // The backend returns { success: true, data: [...] }
         setCryptos(data.data || []);
       } else {
         throw new Error(data.message || 'Failed to fetch cryptocurrencies');
@@ -27,7 +26,7 @@ export const useCrypto = () => {
 
   useEffect(() => {
     fetchCryptos();
-  }, []);
+  }, [endpoint]);
 
   return { cryptos, loading, error, refresh: fetchCryptos };
 };

@@ -380,7 +380,9 @@ function Navbar() {
             </>
           ) : (
             <div className="flex items-center gap-4">
-              <span className="hidden md:block text-gray-700 font-medium">Hi, {user.name}</span>
+              <Link to="/profile" className="hidden md:block text-gray-700 font-medium hover:text-blue-600 transition">
+                Hi, {user.name}
+              </Link>
               <button
                 onClick={logout}
                 className="px-5 py-2 bg-gray-100 text-gray-900 font-semibold rounded-full hover:bg-gray-200 transition whitespace-nowrap text-lg"
