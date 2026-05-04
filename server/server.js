@@ -33,6 +33,21 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Root Landing Page
+app.get('/', (req, res) => {
+  res.status(200).send(`
+    <div style="font-family: sans-serif; padding: 50px; line-height: 1.6; max-width: 600px; margin: 0 auto; color: #1a1b1d;">
+      <h1 style="color: #0052ff;">Coinbase Clone Backend</h1>
+      <p>The API is up and running successfully!</p>
+      <div style="background: #f4f7f9; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0;">
+        <p><strong>Primary API Endpoint:</strong> <a href="/api" style="color: #0052ff; font-weight: bold; text-decoration: none;">/api</a></p>
+        <p><strong>Status:</strong> <span style="color: #05b169;">● Operational</span></p>
+      </div>
+      <p style="margin-top: 30px; font-size: 14px; color: #64748b;">Developed for DCIT323 Crypto-UI Assignment.</p>
+    </div>
+  `);
+});
+
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/crypto', require('./routes/cryptoRoutes'));
