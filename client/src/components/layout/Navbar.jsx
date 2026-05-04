@@ -36,6 +36,8 @@ import companyImage from "../../assets/company-imag.png";
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
   const { user } = useAuthContext();
   const { logout } = useAuth();
 
@@ -350,45 +352,114 @@ function Navbar() {
 
         {/* RIGHT SIDE */}
         <div className="flex items-center space-x-4">
-          {/* Search — always visible */}
-          <div className="bg-gray-100 p-2 rounded-full cursor-pointer">
-            <img src={searchIcon} alt="Search Icon" className="h-6 w-6" />
+          {/* Search — Icon that expands into a bar */}
+          <div className="relative flex items-center group">
+            <div 
+              onClick={() => setIsSearchOpen(!isSearchOpen)}
+              className={`p-2 rounded-full cursor-pointer transition-colors z-20 ${isSearchOpen ? 'bg-blue-50 text-blue-600' : 'bg-gray-100 hover:bg-gray-200'}`}
+            >
+              <img src={searchIcon} alt="Search Icon" className="h-6 w-6" />
+            </div>
+
+            <input 
+              type="text" 
+              autoFocus={isSearchOpen}
+              placeholder="Search"
+              onFocus={() => setIsSearchOpen(true)}
+              onBlur={() => setTimeout(() => setIsSearchOpen(false), 200)}
+              className={`absolute right-0 bg-gray-100 border-none rounded-full py-2.5 pl-12 pr-4 text-sm focus:ring-2 focus:ring-blue-500 transition-all duration-500 ease-in-out ${isSearchOpen ? 'w-[450px] opacity-100' : 'w-0 opacity-0 pointer-events-none'}`}
+            />
           </div>
 
-          {/* Language — tablet and up */}
-          <div className="hidden md:flex bg-gray-100 p-2 rounded-full cursor-pointer">
-            <img src={languageIcon} alt="Language Icon" className="h-6 w-6" />
-          </div>
+          {/* Hide these when search is open */}
+          {!isSearchOpen && (
+            <div className="flex items-center space-x-4 animate-in fade-in duration-300">
+              {/* Language — tablet and up */}
+              <div className="hidden md:block relative">
+                <div 
+                  onClick={() => setIsLangOpen(!isLangOpen)}
+                  className="bg-gray-100 p-2 rounded-full cursor-pointer hover:bg-gray-200 transition-colors"
+                >
+                  <img src={languageIcon} alt="Language Icon" className="h-6 w-6" />
+                </div>
+                
+                {isLangOpen && (
+                  <div className="absolute right-0 mt-4 w-80 bg-white rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] border border-gray-100 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-200">
+                    <div className="p-6 border-b border-gray-50">
+                      <h3 className="text-xl font-bold text-gray-900 mb-4">Language and region</h3>
+                      <div className="relative">
+                        <img src={searchIcon} className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 opacity-40" alt="search" />
+                        <input 
+                          type="text" 
+                          placeholder="Search language or region"
+                          className="w-full bg-gray-50 border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500 transition-all"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div className="max-h-[400px] overflow-y-auto py-2 custom-scrollbar">
+                      {[
+                        { lang: "English", region: "Global" },
+                        { lang: "English", region: "United States" },
+                        { lang: "Español", region: "España" },
+                        { lang: "Español", region: "México" },
+                        { lang: "Deutsch", region: "Deutschland" },
+                        { lang: "Français", region: "France" },
+                        { lang: "Italiano", region: "Italia" },
+                        { lang: "Português", region: "Brasil" },
+                        { lang: "日本語", region: "日本" },
+                        { lang: "한국어", region: "대한민국" },
+                        { lang: "简体中文", region: "中国" }
+                      ].map((item, idx) => (
+                        <button 
+                          key={idx}
+                          className="w-full text-left px-6 py-3 hover:bg-gray-50 transition-colors group flex items-center justify-between"
+                        >
+                          <div>
+                            <p className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{item.lang}</p>
+                            <p className="text-xs text-gray-500">{item.region}</p>
+                          </div>
+                          {idx === 0 && <span className="text-blue-600 text-lg">✓</span>}
+                        </button>
+                      ))}
+                    </div>
+                    
+                    <div className="p-4 bg-gray-50 border-t border-gray-100 text-center">
+                      <p className="text-xs text-gray-400">Settings will be saved for your next visit.</p>
+                    </div>
+                  </div>
+                )}
+              </div>
 
-          {!user ? (
-            <>
-              {/* Sign in — tablet and up */}
-              <Link
-                to="/signin-splash"
-                className="hidden md:block px-5 py-2 bg-gray-100 font-semibold rounded-full hover:bg-gray-200 hover:text-blue-600 whitespace-nowrap text-lg transition"
-              >
-                Sign in
-              </Link>
+              {!user ? (
+                <>
+                  <Link
+                    to="/signin-splash"
+                    className="hidden md:block px-5 py-2 bg-gray-100 font-semibold rounded-full hover:bg-gray-200 hover:text-blue-600 whitespace-nowrap text-lg transition"
+                  >
+                    Sign in
+                  </Link>
 
-              {/* Sign up — always visible */}
-              <Link
-                to="/signup-splash"
-                className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition whitespace-nowrap text-lg"
-              >
-                Sign up
-              </Link>
-            </>
-          ) : (
-            <div className="flex items-center gap-4">
-              <Link to="/profile" className="hidden md:block text-gray-700 font-medium hover:text-blue-600 transition">
-                Hi, {user.name}
-              </Link>
-              <button
-                onClick={logout}
-                className="px-5 py-2 bg-gray-100 text-gray-900 font-semibold rounded-full hover:bg-gray-200 transition whitespace-nowrap text-lg"
-              >
-                Sign out
-              </button>
+                  <Link
+                    to="/signup-splash"
+                    className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition whitespace-nowrap text-lg"
+                  >
+                    Sign up
+                  </Link>
+                </>
+              ) : (
+                <div className="flex items-center gap-4">
+                  <Link to="/profile" className="hidden md:block text-gray-700 font-medium hover:text-blue-600 transition">
+                    Hi, {user.name}
+                  </Link>
+                  <button
+                    onClick={logout}
+                    className="px-5 py-2 bg-gray-100 text-gray-900 font-semibold rounded-full hover:bg-gray-200 transition whitespace-nowrap text-lg"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
@@ -476,6 +547,61 @@ function Navbar() {
               <img src={arrowIcon} alt="Arrow Icon" className="h-6 w-6" />
             </a>
           ))}
+        </div>
+      )}
+      {isSearchOpen && (
+        <div className="fixed right-4 md:right-12 top-[100px] w-[850px] bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.2)] border border-gray-100 overflow-hidden z-40 animate-in fade-in slide-in-from-top-4 duration-200 origin-top-right">
+          <div className="p-8 border-b border-gray-50 flex items-center justify-between">
+            <div className="flex gap-2 overflow-x-auto no-scrollbar">
+              {["Top", "Crypto", "Stocks", "Predictions", "Perpetuals", "Future"].map((cat) => (
+                <button key={cat} className={`px-5 py-2 rounded-full text-sm font-bold whitespace-nowrap transition ${cat === "Top" ? "bg-black text-white" : "text-gray-500 hover:bg-gray-100"}`}>
+                  {cat}
+                </button>
+              ))}
+            </div>
+            <button className="text-sm font-bold text-blue-600 hover:underline">View all assets</button>
+          </div>
+
+          <div className="p-8">
+            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest block mb-6">Trending Assets</span>
+            
+            <div className="grid grid-cols-2 gap-x-12 gap-y-1">
+              {[
+                { name: "Bitcoin", symbol: "BTC", price: "$79,178.00", change: "+0.69%" },
+                { name: "Ethereum", symbol: "ETH", price: "$2,344.09", change: "+0.92%" },
+                { name: "Tether", symbol: "USDT", price: "$0.9998", change: "+0.00%" },
+                { name: "XRP", symbol: "XRP", price: "$1.40", change: "+0.20%" },
+                { name: "BNB", symbol: "BNB", price: "$624.10", change: "+0.81%" },
+                { name: "USDC", symbol: "USDC", price: "$0.9998", change: "-0.01%" },
+                { name: "Solana", symbol: "SOL", price: "$84.33", change: "+0.15%" },
+                { name: "TRON", symbol: "TRX", price: "$0.3390", change: "+0.29%" },
+                { name: "Figure Heloc", symbol: "FIGR_HELOC", price: "$1.04", change: "+0.00%" },
+                { name: "Dogecoin", symbol: "DOGE", price: "$0.1114", change: "+2.61%" }
+              ].map((asset) => (
+                <button key={asset.symbol} className="flex items-center justify-between py-3 hover:bg-gray-50 rounded-xl px-4 -mx-4 transition-colors group">
+                  <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center font-bold text-xs text-gray-500 group-hover:bg-white transition-colors">
+                      {asset.symbol.substring(0, 2)}
+                    </div>
+                    <div className="text-left">
+                      <p className="font-bold text-gray-900 group-hover:text-blue-600 transition-colors">{asset.name}</p>
+                      <p className="text-xs text-gray-400">{asset.symbol}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold text-gray-900">{asset.price}</p>
+                    <p className={`text-xs font-medium ${asset.change.startsWith('+') ? 'text-green-500' : 'text-red-500'}`}>{asset.change}</p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-gray-50 p-4 text-center">
+            <button className="text-sm font-bold text-gray-500 hover:text-blue-600 transition-colors">
+              See all results for "Top"
+            </button>
+          </div>
         </div>
       )}
     </header>
