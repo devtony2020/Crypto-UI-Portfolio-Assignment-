@@ -13,9 +13,11 @@ const generateToken = (userId) => {
 exports.register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
+    console.log(`Registration attempt for: ${email}`);
 
     // Validate input
     if (!name || !email || !password) {
+      console.log('Registration failed: Missing fields');
       return res.status(400).json({
         success: false,
         message: 'Please provide name, email, and password',
@@ -23,6 +25,7 @@ exports.register = async (req, res) => {
     }
 
     if (!validateEmail(email)) {
+      console.log(`Registration failed: Invalid email format (${email})`);
       return res.status(400).json({
         success: false,
         message: 'Please provide a valid email address',
@@ -30,6 +33,7 @@ exports.register = async (req, res) => {
     }
 
     if (!validatePassword(password)) {
+      console.log('Registration failed: Weak password');
       return res.status(400).json({
         success: false,
         message: 'Password must be at least 6 characters long',
@@ -39,6 +43,7 @@ exports.register = async (req, res) => {
     // Check if email already exists
     const emailExists = await User.findOne({ email });
     if (emailExists) {
+      console.log(`Registration failed: Email already exists (${email})`);
       return res.status(400).json({
         success: false,
         message: 'Email already registered',
@@ -46,11 +51,14 @@ exports.register = async (req, res) => {
     }
 
     // Create user
+    console.log('Creating new user in database...');
     const user = new User({ name, email, password });
     await user.save();
+    console.log('User saved successfully');
 
     // Generate token
     const token = generateToken(user._id);
+    console.log('JWT generated successfully');
 
     res.status(201).json({
       success: true,
@@ -63,6 +71,7 @@ exports.register = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error('Registration ERROR:', error.message);
     res.status(500).json({
       success: false,
       message: error.message || 'Error registering user',

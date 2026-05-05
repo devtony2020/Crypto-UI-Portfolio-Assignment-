@@ -21,13 +21,20 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    // allow requests with no origin (like mobile apps or curl requests)
+    // Allow requests with no origin (like mobile apps or curl requests)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
+    
+    // Normalize origins for comparison (remove trailing slashes)
+    const normalizedAllowedOrigins = allowedOrigins.map(o => o ? o.replace(/\/$/, '') : o);
+    const normalizedOrigin = origin.replace(/\/$/, '');
+
+    if (normalizedAllowedOrigins.includes(normalizedOrigin)) {
+      return callback(null, true);
+    } else {
+      console.warn(`CORS blocked for origin: ${origin}`);
       var msg = 'The CORS policy for this site does not allow access from the specified Origin.';
       return callback(new Error(msg), false);
     }
-    return callback(null, true);
   },
   credentials: true,
 }));
@@ -134,6 +141,17 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+const startServer = (port) => {
+  const server = app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+  }).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.log(`Port ${port} is busy, trying ${parseInt(port) + 1}...`);
+      startServer(parseInt(port) + 1);
+    } else {
+      console.error('Server error:', err);
+    }
+  });
+};
+
+startServer(PORT);
