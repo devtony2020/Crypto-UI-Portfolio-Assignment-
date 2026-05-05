@@ -60,9 +60,7 @@ function App() {
           path="/profile" 
           element={
             <ProtectedRoute>
-              <Navbar />
               <ProfilePage />
-              <Footer />
             </ProtectedRoute>
           } 
         />
