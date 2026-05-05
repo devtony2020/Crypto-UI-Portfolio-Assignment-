@@ -5,8 +5,8 @@ import { useAuthContext } from '../context/AuthContext';
 const apiErrorMap = (error) => {
   const msg = error.message || error.toString();
   
-  if (msg.includes('Failed to fetch')) {
-    return 'Cannot connect to server. Please check your internet or try again later.';
+  if (msg.includes('Failed to fetch') || msg.includes('Load failed')) {
+    return 'Server is waking up (Render free tier). Please wait 30 seconds and try again, or check your internet connection.';
   }
   if (msg.includes('secretOrPrivateKey must have a value')) {
     return 'Server configuration error (JWT Secret missing). Please contact support.';
