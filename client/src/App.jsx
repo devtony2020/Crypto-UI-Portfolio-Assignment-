@@ -31,15 +31,38 @@ function App() {
           }
         />
         <Route path="/signin-splash" element={<SplashPage redirectTo="/signin" />} />
-        <Route path="/signin" element={<SignInPage />} />
+        <Route 
+          path="/signin" 
+          element={
+            <>
+              <SignInPage />
+            </>
+          } 
+        />
         <Route path="/signup-splash" element={<SplashPage redirectTo="/signup" />} />
-        <Route path="/signup" element={<SignUpPage />} />
-        <Route path="/create-account" element={<CreateAccountPage />} />
+        <Route 
+          path="/signup" 
+          element={
+            <>
+              <SignUpPage />
+            </>
+          } 
+        />
+        <Route 
+          path="/create-account" 
+          element={
+            <>
+              <CreateAccountPage />
+            </>
+          } 
+        />
         <Route 
           path="/profile" 
           element={
             <ProtectedRoute>
+              <Navbar />
               <ProfilePage />
+              <Footer />
             </ProtectedRoute>
           } 
         />
