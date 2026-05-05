@@ -461,7 +461,7 @@ function Navbar() {
               ) : (
                 <div className="flex items-center gap-4">
                   <Link to="/profile" className="hidden md:block text-gray-700 font-medium hover:text-blue-600 transition">
-                    Hi, {user.name}
+                    Hi, {user.name?.split(' ')[0]}
                   </Link>
                   <button
                     onClick={logout}
