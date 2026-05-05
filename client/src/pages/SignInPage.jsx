@@ -61,10 +61,12 @@ function SignInPage() {
                 id="email"
                 name="email"
                 type="email"
+                inputMode="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email address"
-                className="w-full border bg-black border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent"
+                className="w-full border bg-black border-gray-300 rounded-lg px-4 py-3 text-[16px] focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent transition-all"
                 required
               />
             </div>
@@ -78,10 +80,11 @@ function SignInPage() {
                 id="password"
                 name="password"
                 type="password"
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Your password"
-                className="w-full border bg-black border-gray-300 rounded-lg px-4 py-3 text-base focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent"
+                className="w-full border bg-black border-gray-300 rounded-lg px-4 py-3 text-[16px] focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent transition-all"
                 required
               />
             </div>
@@ -90,11 +93,16 @@ function SignInPage() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 rounded-full font-semibold text-base transition ${
+              className={`w-full py-3 rounded-full font-semibold text-base transition transform active:scale-[0.98] ${
                 loading ? 'bg-blue-600/50 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 text-white'
               }`}
             >
-              {loading ? 'Signing in...' : 'Continue'}
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  <span>Signing in...</span>
+                </div>
+              ) : 'Continue'}
             </button>
           </form>
 

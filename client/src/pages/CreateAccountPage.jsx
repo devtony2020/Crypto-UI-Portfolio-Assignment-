@@ -64,10 +64,11 @@ function CreateAccountPage() {
                 id="name"
                 name="name"
                 type="text"
+                autoComplete="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Your full name"
-                className="w-full border bg-black border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent"
+                className="w-full border bg-black border-gray-300 rounded-xl px-4 py-3 text-[16px] focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent transition-all"
                 required
               />
             </div>
@@ -81,10 +82,12 @@ function CreateAccountPage() {
                 id="email"
                 name="email"
                 type="email"
+                inputMode="email"
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email address"
-                className="w-full border bg-black border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent"
+                className="w-full border bg-black border-gray-300 rounded-xl px-4 py-3 text-[16px] focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent transition-all"
                 required
               />
             </div>
@@ -98,10 +101,11 @@ function CreateAccountPage() {
                 id="password"
                 name="password"
                 type="password"
+                autoComplete="new-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Minimum 6 characters"
-                className="w-full border bg-black border-gray-300 rounded-xl px-4 py-3 text-base focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent mb-5"
+                className="w-full border bg-black border-gray-300 rounded-xl px-4 py-3 text-[16px] focus:outline-none focus:ring-2 text-white focus:ring-blue-500 focus:border-transparent transition-all mb-5"
                 required
               />
             </div>
@@ -110,11 +114,16 @@ function CreateAccountPage() {
             <button
               type="submit"
               disabled={loading}
-              className={`w-full py-3 px-4 font-semibold rounded-3xl transition ${
+              className={`w-full py-3 px-4 font-semibold rounded-3xl transition transform active:scale-[0.98] ${
                 loading ? 'bg-blue-500/50 cursor-not-allowed' : 'bg-blue-500 text-black hover:bg-blue-400'
               }`}
             >
-              {loading ? 'Creating account...' : 'Continue'}
+              {loading ? (
+                <div className="flex items-center justify-center gap-2">
+                  <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin"></div>
+                  <span>Creating account...</span>
+                </div>
+              ) : 'Continue'}
             </button>
           </form>
         <div className="flex items-center justify-center gap-2 my-6">
